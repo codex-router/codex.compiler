@@ -1,0 +1,77 @@
+name: Release
+
+on:
+  release:
+    types:
+      - created
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: Build ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu-latest
+          - windows-latest
+          - macos-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Build release binary
+        run: cargo build --release
+
+      - name: Package artifact
+        shell: bash
+        run: |
+          mkdir -p dist
+          arch="${{ runner.arch }}"
+          if [ "$arch" = "X64" ]; then
+            arch="x86_64"
+          elif [ "$arch" = "ARM64" ]; then
+            arch="aarch64"
+          fi
+
+          if [ "${{ matrix.os }}" = "windows-latest" ]; then
+            cp target/release/codexc.exe dist/codexc-windows-${arch}.exe
+          elif [ "${{ matrix.os }}" = "ubuntu-latest" ]; then
+            cp target/release/codexc dist/codexc-linux-${arch}
+          else
+            cp target/release/codexc dist/codexc-macos-${arch}
+          fi
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: codexc-${{ matrix.os }}
+          path: dist/*
+
+  release:
+    name: Publish GitHub Release
+    needs: build
+    if: startsWith(github.ref, 'refs/tags/')
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
+        with:
+          pattern: codexc-*
+          merge-multiple: true
+          path: dist
+
+      - name: Create or update release
+        uses: softprops/action-gh-release@v2
+        with:
+          token: ${{ secrets.CODEX_ROUTER_TOKEN }}
+          files: dist/*
+          generate_release_notes: true
