@@ -212,7 +212,6 @@ fn parse_decl_specifiers(p: &mut Parser, lang: Language) -> bool {
             // struct / union
             TokenKind::KwStruct | TokenKind::KwUnion => {
                 saw_any = true;
-                saw_type = true;
                 p.advance();
                 parse_struct_or_union_body(p, lang);
                 break;
@@ -220,7 +219,6 @@ fn parse_decl_specifiers(p: &mut Parser, lang: Language) -> bool {
             // enum
             TokenKind::KwEnum => {
                 saw_any = true;
-                saw_type = true;
                 p.advance();
                 // optional 'class' (C++11 enum class)
                 if lang == Language::Cpp { p.eat(&TokenKind::KwClass); }
@@ -233,7 +231,6 @@ fn parse_decl_specifiers(p: &mut Parser, lang: Language) -> bool {
             // class (C++ / Java)
             TokenKind::KwClass if !saw_type => {
                 saw_any = true;
-                saw_type = true;
                 p.advance();
                 parse_struct_or_union_body(p, lang);
                 break;
@@ -242,7 +239,6 @@ fn parse_decl_specifiers(p: &mut Parser, lang: Language) -> bool {
             // ONLY consume if we haven't seen a primitive type keyword yet.
             TokenKind::Ident(_) if !saw_type => {
                 saw_any = true;
-                saw_type = true;
                 parse_qualified_name(p);
 
                 // Handle template arguments e.g. vector<int> – only in C++
