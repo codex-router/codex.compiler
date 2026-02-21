@@ -18,7 +18,7 @@ use std::{fs, time::Instant};
 
 #[derive(ClapParser, Debug)]
 #[command(
-    name = "tcc",
+    name = "codexc",
     version = "0.1.0",
     about = "Codex Compiler – fast grammar verification for C / C++ / Java",
     long_about = None
@@ -60,7 +60,7 @@ fn main() {
 
     println!(
         "{} – grammar checker for C / C++ / Java",
-        "tcc".bold().cyan()
+        "codexc".bold().cyan()
     );
     println!();
 

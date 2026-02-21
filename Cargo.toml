@@ -5,7 +5,7 @@ edition = "2021"
 description = "Fast grammar-verification compiler for C, C++, and Java"
 
 [[bin]]
-name = "tcc"
+name = "codexc"
 path = "src/main.rs"
 
 [dependencies]
