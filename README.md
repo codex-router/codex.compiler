@@ -168,3 +168,14 @@ samples/           # Example source files for manual testing
 |------|---------|
 | `0` | All files parsed without errors |
 | `1` | One or more files contained grammar errors |
+
+---
+
+## License
+
+Licensed under the **Apache License, Version 2.0**.
+
+You may obtain a copy of the License at:
+- http://www.apache.org/licenses/LICENSE-2.0
+
+See [LICENSE](./LICENSE) for the full license text.
