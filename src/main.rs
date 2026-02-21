@@ -20,7 +20,7 @@ use std::{fs, time::Instant};
 #[command(
     name = "tcc",
     version = "0.1.0",
-    about = "Tiny Compiler – fast grammar verification for C / C++ / Java",
+    about = "Codex Compiler – fast grammar verification for C / C++ / Java",
     long_about = None
 )]
 struct Cli {

@@ -219,7 +219,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "tiny-compiler"
+name = "codex-compiler"
 version = "0.1.0"
 dependencies = [
  "clap",

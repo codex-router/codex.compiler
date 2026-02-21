@@ -1,5 +1,5 @@
 [package]
-name = "tiny-compiler"
+name = "codex-compiler"
 version = "0.1.0"
 edition = "2021"
 description = "Fast grammar-verification compiler for C, C++, and Java"
