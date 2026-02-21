@@ -21,6 +21,43 @@ The binary is named `codexc`.
 
 ---
 
+## Setting Release Version
+
+Update the crate version in `Cargo.toml` before creating a release.
+
+### Option A: Edit `Cargo.toml` directly
+
+Set the `[package]` version field:
+
+```toml
+[package]
+name = "codex-compiler"
+version = "1.0.0"
+```
+
+### Option B: Use `cargo set-version`
+
+Install once:
+
+```bash
+cargo install cargo-edit
+```
+
+Set the version:
+
+```bash
+cargo set-version 1.0.0
+```
+
+Optional: create a matching git tag:
+
+```bash
+git tag v1.0.0
+git push origin v1.0.0
+```
+
+---
+
 ## Building
 
 ### Debug build
